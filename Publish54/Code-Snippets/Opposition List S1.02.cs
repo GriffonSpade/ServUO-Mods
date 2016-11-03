@@ -193,26 +193,26 @@ Snippet Type: Module Replacement
 		public virtual bool IsFriend( Mobile m )
 		{
 			if (OppositionListEnemy(m))
-            {
-                return false;
-            }
+			{
+				return false;
+			}
 
-            OppositionGroup g = OppositionGroup;
+			OppositionGroup g = OppositionGroup;
 
-            if (g != null && g.IsEnemy(this, m))
-            {
-                return false;
-            }
+			if (g != null && g.IsEnemy(this, m))
+			{
+				return false;
+			}
 
-            if (!(m is BaseCreature))
-            {
-                return false;
-            }
+			if (!(m is BaseCreature))
+			{
+				return false;
+			}
 
-            BaseCreature c = (BaseCreature)m;
+			BaseCreature c = (BaseCreature)m;
 
-            return (m_iTeam == c.m_iTeam && ((m_bSummoned || m_bControlled) == (c.m_bSummoned || c.m_bControlled))
-                   /* && c.Combatant != this */);
+			return (m_iTeam == c.m_iTeam && ((m_bSummoned || m_bControlled) == (c.m_bSummoned || c.m_bControlled))
+				   /* && c.Combatant != this */);
 		}
 
 //GS//
@@ -221,69 +221,69 @@ Snippet Type: Module Replacement
 //GS
 		public virtual bool IsEnemy( Mobile m )
 		{
-            XmlIsEnemy a = (XmlIsEnemy)XmlAttach.FindAttachment(this, typeof(XmlIsEnemy));
+			XmlIsEnemy a = (XmlIsEnemy)XmlAttach.FindAttachment(this, typeof(XmlIsEnemy));
 
-            if (a != null)
-            {
-                return a.IsEnemy(m);
-            }
+			if (a != null)
+			{
+				return a.IsEnemy(m);
+			}
 
 			if (OppositionListEnemy(m))
-            {
+			{
 				return true;
-            }
+			}
 
-            OppositionGroup g = OppositionGroup;
+			OppositionGroup g = OppositionGroup;
 
-            if (g != null && g.IsEnemy(this, m))
-            {
-                return true;
-            }
+			if (g != null && g.IsEnemy(this, m))
+			{
+				return true;
+			}
 
-            if (m is BaseGuard)
-            {
-                return false;
-            }
+			if (m is BaseGuard)
+			{
+				return false;
+			}
 
-            if (GetFactionAllegiance(m) == Allegiance.Ally)
-            {
-                return false;
-            }
+			if (GetFactionAllegiance(m) == Allegiance.Ally)
+			{
+				return false;
+			}
 
-            Ethic ourEthic = EthicAllegiance;
-            Player pl = Ethics.Player.Find(m, true);
+			Ethic ourEthic = EthicAllegiance;
+			Player pl = Ethics.Player.Find(m, true);
 
-            if (pl != null && pl.IsShielded && (ourEthic == null || ourEthic == pl.Ethic))
-            {
-                return false;
-            }
+			if (pl != null && pl.IsShielded && (ourEthic == null || ourEthic == pl.Ethic))
+			{
+				return false;
+			}
 
-            if (m is PlayerMobile && ((PlayerMobile)m).HonorActive)
-            {
-                return false;
-            }
+			if (m is PlayerMobile && ((PlayerMobile)m).HonorActive)
+			{
+				return false;
+			}
 
-            if (!(m is BaseCreature) || m is MilitiaFighter)
-            {
-                return true;
-            }
+			if (!(m is BaseCreature) || m is MilitiaFighter)
+			{
+				return true;
+			}
 
-            if (TransformationSpellHelper.UnderTransformation(m, typeof(EtherealVoyageSpell)))
-            {
-                return false;
-            }
+			if (TransformationSpellHelper.UnderTransformation(m, typeof(EtherealVoyageSpell)))
+			{
+				return false;
+			}
 
-            BaseCreature c = (BaseCreature)m;
-            BaseCreature t = this;
+			BaseCreature c = (BaseCreature)m;
+			BaseCreature t = this;
 
-            // Summons should have same rules as their master
-            if (c.Summoned && c.SummonMaster != null && c.SummonMaster is BaseCreature)
-                c = c.SummonMaster as BaseCreature;
+			// Summons should have same rules as their master
+			if (c.Summoned && c.SummonMaster != null && c.SummonMaster is BaseCreature)
+				c = c.SummonMaster as BaseCreature;
 
-            if (t.Summoned && t.SummonMaster != null && t.SummonMaster is BaseCreature)
-                t = t.SummonMaster as BaseCreature;
+			if (t.Summoned && t.SummonMaster != null && t.SummonMaster is BaseCreature)
+				t = t.SummonMaster as BaseCreature;
 
-            return (t.m_iTeam != c.m_iTeam || ((t.m_bSummoned || t.m_bControlled) != (c.m_bSummoned || c.m_bControlled))/* || c.Combatant == this*/ );
+			return (t.m_iTeam != c.m_iTeam || ((t.m_bSummoned || t.m_bControlled) != (c.m_bSummoned || c.m_bControlled))/* || c.Combatant == this*/ );
 		}
 //GS//
 
