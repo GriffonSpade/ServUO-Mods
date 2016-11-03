@@ -1,6 +1,8 @@
 Purpose: adds Guard FightMode that can be added to creatures. 
 It behaves as the Aggressor FightMode, with the exception that it will attack criminals and murderers.
-
+Current Status: Unreleased
+Reason: Behavior is unsatisfactory because players can attack guards without being flagged criminal.
+	
 File: BaseCreature.cs
 File Location: ServUO-master\Scripts\Mobiles\Normal\
 
