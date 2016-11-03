@@ -1,0 +1,40 @@
+BaseCreature Skill Resistance version S1.00
+Purpose: Allows creatures to have player-like minimum resist from resisting spells skill with an optional physical resist toggle
+Note: System causes by default no deviation without further edits in creature files.
+
+File: BaseCreature.cs
+File Location: ...\Scripts\Mobiles\Normal\
+
+Snippet Type: Section Addition
+Suggested Location: Just below EnergyResistSeed.
+//GS
+		public virtual bool HasSkillResist{ get{ return false; } }				// Lets NPC have player-like resist from resisting spells
+		public virtual bool HasResistArmor{ get{ return true; } }				// Lets NPC have player-like physical resist if they also HasSkillResist
+		public virtual int MinResistCap{ get{ return MaxPlayerResistance; } }	// Maximum possible value of skill resist
+
+		public override void OnSkillInvalidated( Skill skill )
+		{
+			if ( Core.AOS && HasSkillResist && skill.SkillName == SkillName.MagicResist )
+				UpdateResistances();
+		}
+
+		public override int GetMinResistance( ResistanceType type )
+		{
+			int min = int.MinValue;
+
+			if ( !HasSkillResist )
+				return min;
+
+			if ( !HasResistArmor && type == ResistanceType.Physical )
+				return min;
+
+			int magicResist = (int)(Skills[SkillName.MagicResist].Value * 10);
+
+			if ( magicResist >= 1000 )
+				min = 40 + ((magicResist - 1000) / 50);
+			else if ( magicResist >= 400 )
+				min = (magicResist - 400) / 15;
+
+			return Math.Min(min, MinResistCap);
+		}
+//GS//
