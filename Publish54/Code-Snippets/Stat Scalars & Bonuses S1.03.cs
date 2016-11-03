@@ -210,14 +210,8 @@ Snippet Type: Module Replacement
 					damage = (int)(damage * HitScale / ParagonHitScale + ParagonBreathBonus);
 				}
 
-				if ( damage < ParagonBreathMin )
-				{
-					damage = ParagonBreathMin;
-				}
-				else if ( damage > ParagonBreathMax )
-				{
-					damage = ParagonBreathMax;
-				}
+				damage = Math.Max(damage, ParagonBreathMin);
+				damage = Math.Min(damage, ParagonBreathMax);
 
 				return damage;
 			}
