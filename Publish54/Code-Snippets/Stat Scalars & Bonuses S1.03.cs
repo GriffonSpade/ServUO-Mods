@@ -223,15 +223,8 @@ Snippet Type: Module Replacement
 			}
 
 			damage = (int)(Hits * BreathDamageScalar + BreathDamageBonus);
-
-			if ( damage < BreathDamageMin )
-			{
-				damage = BreathDamageMin;
-			}
-			else if ( damage > BreathDamageMax )
-			{
-				damage = BreathDamageMax;
-			}
+			damage = Math.Max(damage, BreathDamageMin);
+			damage = Math.Min(damage, BreathDamageMax);
 
 			return damage;
 		}
