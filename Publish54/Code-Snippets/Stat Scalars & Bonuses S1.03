@@ -157,17 +157,17 @@ Snippet Type: Module Replacement
 				}
 
 				if ( m_Paragon == value )
-						{
+				{
 					return;
-						}
+				}
 				else if ( value )
-						{
-							XmlParagon.Convert(this);
-						}
+				{
+					XmlParagon.Convert(this);
+				}
 				else
-						{
-							XmlParagon.UnConvert(this);
-						}
+				{
+					XmlParagon.UnConvert(this);
+				}
 
 				m_Paragon = value;
 				Hits = HitsMax;
@@ -183,9 +183,9 @@ Snippet Type: Module Replacement
 		public override void OnBeforeSpawn( Point3D location, Map m )
 		{
 			if ( !NeverParagon && XmlParagon.CheckConvert(this, location, m) )
-				{
-					IsParagon = true;
-				}
+			{
+				IsParagon = true;
+			}
 
 			base.OnBeforeSpawn( location, m );
 		}
