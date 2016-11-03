@@ -45,31 +45,31 @@ Suggested Location: Just below ForceNotoriety.
 
 Snippet Type: Module Replacement
 //GS
-        [CommandProperty(AccessLevel.GameMaster)]
-        public override int HitsMax
-        {
-            get
-            {
-                if (m_HitsMax > 0)
-                {
-                    int value = m_HitsMax + GetStatOffset(StatType.Str);
+		[CommandProperty(AccessLevel.GameMaster)]
+		public override int HitsMax
+		{
+			get
+			{
+				if (m_HitsMax > 0)
+				{
+					int value = m_HitsMax + GetStatOffset(StatType.Str);
 
-                    if (value < 1)
-                    {
-                        value = 1;
-                    }
-                    else if (value > 1000000)
-                    {
-                        value = 1000000;
-                    }
+					if (value < 1)
+					{
+						value = 1;
+					}
+					else if (value > 1000000)
+					{
+						value = 1000000;
+					}
 
-                    return value;
-                }
+					return value;
+				}
 				
 				if ( IsParagon )
-                {
+				{
 					return (int)(Str * ParagonHitScale + ParagonHitBonus);
-                }
+				}
 
 				return (int)(Str * HitScale + HitBonus);
 			}
@@ -83,26 +83,26 @@ Snippet Type: Module Replacement
 		{
 			get
 			{
-                if (m_StamMax > 0)
-                {
-                    int value = m_StamMax + GetStatOffset(StatType.Dex);
+				if (m_StamMax > 0)
+				{
+					int value = m_StamMax + GetStatOffset(StatType.Dex);
 
-                    if (value < 1)
-                    {
-                        value = 1;
-                    }
-                    else if (value > 1000000)
-                    {
-                        value = 1000000;
-                    }
+					if (value < 1)
+					{
+						value = 1;
+					}
+					else if (value > 1000000)
+					{
+						value = 1000000;
+					}
 
-                    return value;
-                }
+					return value;
+				}
 
 				if ( IsParagon )
-                {
+				{
 					return (int)(Dex * ParagonStamScale + ParagonStamBonus);
-                }
+				}
 
 				return (int)(Dex * StamScale + StamBonus);
 			}
@@ -116,26 +116,26 @@ Snippet Type: Module Replacement
 		{
 			get
 			{
-                if (m_ManaMax > 0)
-                {
-                    int value = m_ManaMax + GetStatOffset(StatType.Int);
+				if (m_ManaMax > 0)
+				{
+					int value = m_ManaMax + GetStatOffset(StatType.Int);
 
-                    if (value < 1)
-                    {
-                        value = 1;
-                    }
-                    else if (value > 1000000)
-                    {
-                        value = 1000000;
-                    }
+					if (value < 1)
+					{
+						value = 1;
+					}
+					else if (value > 1000000)
+					{
+						value = 1000000;
+					}
 
-                    return value;
-                }
+					return value;
+				}
 
 				if ( IsParagon )
-                {
+				{
 					return (int)(Int * ParagonManaScale + ParagonManaBonus);
-                }
+				}
 
 				return (int)(Int * ManaScale + ManaBonus);
 			}
@@ -145,67 +145,67 @@ Snippet Type: Module Replacement
 Snippet Type: Module Replacement
 //GS
 		[CommandProperty( AccessLevel.GameMaster )]
-    public bool IsParagon
-    {
-      get{ return m_Paragon; }
-      set
-      {
-        if ( NeverParagon )
-        {
-          m_Paragon = false;
-          return;
-        }
+		public bool IsParagon
+		{
+			get{ return m_Paragon; }
+			set
+			{
+				if ( NeverParagon )
+				{
+					m_Paragon = false;
+					return;
+				}
 
-        if ( m_Paragon == value )
-                {
-          return;
-                }
-        else if ( value )
-                {
-                    XmlParagon.Convert(this);
-                }
-        else
-                {
-                    XmlParagon.UnConvert(this);
-                }
+				if ( m_Paragon == value )
+						{
+					return;
+						}
+				else if ( value )
+						{
+							XmlParagon.Convert(this);
+						}
+				else
+						{
+							XmlParagon.UnConvert(this);
+						}
 
-        m_Paragon = value;
-        Hits = HitsMax;
-        Mana = ManaMax;
-        Stam = StamMax;
-        InvalidateProperties();
-      }
-    }
+				m_Paragon = value;
+				Hits = HitsMax;
+				Mana = ManaMax;
+				Stam = StamMax;
+				InvalidateProperties();
+			}
+		}
 //GS//
 
 Snippet Type: Module Replacement
 //GS
-    public override void OnBeforeSpawn( Point3D location, Map m )
-    {
-      if ( !NeverParagon && XmlParagon.CheckConvert(this, location, m) )
-            {
-                IsParagon = true;
-            }
+		public override void OnBeforeSpawn( Point3D location, Map m )
+		{
+			if ( !NeverParagon && XmlParagon.CheckConvert(this, location, m) )
+				{
+					IsParagon = true;
+				}
 
-      base.OnBeforeSpawn( location, m );
-    }
+			base.OnBeforeSpawn( location, m );
+		}
 //GS//
 
 Snippet Type: Module Replacement
 //GS
-    public virtual int BreathComputeDamage()
-    {
-      int damage;
+		public virtual int BreathComputeDamage()
+		{
+			int damage;
 
-      if ( IsParagon )
-      {
-        damage = (int)(Hits * BreathDamageScalar * ParagonBreathScalar);
+			if ( IsParagon )
+			{
+				damage = (int)(Hits * BreathDamageScalar * ParagonBreathScalar);
 
-        if ( m_HitsMax > 0 )
-        {
-          damage = (int)(damage / XmlParagon.GetHitsBuff(this) + ParagonBreathBonus);
-        }
-        else if ( IsParagon )
+				if ( m_HitsMax > 0 )
+				{
+					damage = (int)(damage / XmlParagon.GetHitsBuff(this) + ParagonBreathBonus);
+				}
+				else if ( IsParagon )
 				{
 					damage = (int)(damage * HitScale / ParagonHitScale + ParagonBreathBonus);
 				}
