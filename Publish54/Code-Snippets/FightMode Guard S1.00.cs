@@ -4,20 +4,20 @@ Current Status: Unreleased
 Reason: Behavior is unsatisfactory because players can attack guards without being flagged criminal.
 	
 File: BaseCreature.cs
-File Location: ServUO-master\Scripts\Mobiles\Normal\
+File Location: ...\Scripts\Mobiles\Normal\
 
 Snippet Type: Module Replacement
 //GS
     public enum FightMode
     {
-        None, // Never focus on others
-        Aggressor, // Only attack aggressors
-        Strongest, // Attack the strongest
-        Weakest, // Attack the weakest
-        Closest, // Attack the closest
-        Evil, // Only attack aggressor -or- negative karma
-        Good, // Only attack aggressor -or- positive karma
-		Guard // Only attack aggressor -or- criminal/murderer
+	None, // Never focus on others
+	Aggressor, // Only attack aggressors
+	Strongest, // Attack the strongest
+	Weakest, // Attack the weakest
+	Closest, // Attack the closest
+	Evil, // Only attack aggressor -or- negative karma
+	Good, // Only attack aggressor -or- positive karma
+	Guard // Only attack aggressor -or- criminal/murderer
     }
 //GS//
 
