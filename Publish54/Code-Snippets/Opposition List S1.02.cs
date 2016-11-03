@@ -1,3 +1,4 @@
+Opposition List version S1.02
 Purpose: Provide simpler, sleeker, and more versatile version of Opposition Group
 Note: System causes by default no deviation without further edits in creature files.
 
