@@ -12,6 +12,7 @@ Suggested Location: Just below ForceNotoriety.
 		public virtual bool XmlOverrideDelay{ get{ return true; } }		// XML overrides DamageDelayFactor instead of modify
 		public virtual double PassiveMoveDelay{ get{ return 0.5; } }	// Delay Added to passive creature AI delay
 		public virtual double ControlMoveDelay{ get{ return 0.0; } }	// Delay Added to controlled creature AI delay
+		public virtual double WildMoveDelay{ get{ return 0.0; } }		// Delay Added to uncontrolled creature AI delay
 		public virtual double MinimumMoveDelay{ get{ return 0.05; } }	// AI delay floor
 		public virtual double DamageDelayFactor{ get{ return 0.2; } }	// Damage Delay scalar
 		public virtual double DamageDelayStart{ get{ return 0.5; } }	// Health percentage which is considered full health for Damage Delay Factor
@@ -26,9 +27,11 @@ Snippet Type: Module Replacement
 		{
 			BaseCreature c = m_Mobile as BaseCreature;
 
+			delay += (delay == c.PassiveSpeed) ? c.PassiveMoveDelay : 0;
+
 			if (!c.Controlled)
 			{
-				delay += (delay == c.PassiveSpeed) ? c.PassiveMoveDelay : 0;
+				delay += c.WildMoveDelay;
 			}
 			else
 			{
