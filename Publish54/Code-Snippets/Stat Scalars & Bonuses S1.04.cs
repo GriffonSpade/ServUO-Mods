@@ -39,8 +39,6 @@ Suggested Location: Just below ForceNotoriety.
 		public virtual int ParagonBreathMax{ get{ return 200; } }		// Maximum breath damage for paragons
 		public virtual int ParagonBreathBonus{ get{ return 0; } }		// Adds damage to breath attack total for paragons
 		public virtual long ParagonBreathScalar{ get{ return 1; } }		// Multiplies breath damage for paragons
-
-		public virtual bool NeverParagon{ get{ return false; } }		// This unit will never spawn as a paragon; for bosses
 //GS//
 
 Snippet Type: Module Replacement
@@ -150,12 +148,6 @@ Snippet Type: Module Replacement
 			get{ return m_Paragon; }
 			set
 			{
-				if ( NeverParagon )
-				{
-					m_Paragon = false;
-					return;
-				}
-
 				if ( m_Paragon == value )
 				{
 					return;
@@ -175,19 +167,6 @@ Snippet Type: Module Replacement
 				Stam = StamMax;
 				InvalidateProperties();
 			}
-		}
-//GS//
-
-Snippet Type: Module Replacement
-//GS
-		public override void OnBeforeSpawn( Point3D location, Map m )
-		{
-			if ( !NeverParagon && XmlParagon.CheckConvert(this, location, m) )
-			{
-				IsParagon = true;
-			}
-
-			base.OnBeforeSpawn( location, m );
 		}
 //GS//
 
@@ -225,6 +204,10 @@ Snippet Type: Module Replacement
 //GS//
 
 Patchnotes:
+vS1.04 - 11/16/2016
+Removed NeverParagon, use native CanBeParagon
+Removed OnBeforeSpawn module, remove NeverParagon references
+Removed NeverParagon check in IsParagon (It aborts immediately before doing any Convert)
 vS1.03 - 11/03/2016
 Added in-file information
 vS1.02 - 10/25/2016
