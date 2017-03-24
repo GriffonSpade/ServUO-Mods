@@ -223,7 +223,6 @@ Snippet Type: Module Replacement
 */	
 			return ((m_bSummoned || m_bControlled) == (c.m_bSummoned || c.m_bControlled));
 		}
-
 //GS//
 
 Snippet Type: Module Replacement
