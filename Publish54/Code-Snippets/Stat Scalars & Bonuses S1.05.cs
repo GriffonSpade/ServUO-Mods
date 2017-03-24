@@ -184,7 +184,7 @@ Snippet Type: Module Replacement
 				{
 					damage = (int)(damage / XmlParagon.GetHitsBuff(this) + ParagonBreathBonus);
 				}
-				else if ( IsParagon )
+				else
 				{
 					damage = (int)(damage * HitScale / ParagonHitScale + ParagonBreathBonus);
 				}
@@ -204,13 +204,15 @@ Snippet Type: Module Replacement
 //GS//
 
 Patchnotes:
-vS1.04 - 11/16/2016
+S1.05 - 03/24/2017
+Changed redundant 'else if Paragon' check nested in an 'if Paragon' check to 'else'
+S1.04 - 11/16/2016
 Removed NeverParagon, use native CanBeParagon
 Removed OnBeforeSpawn module, remove NeverParagon references
 Removed NeverParagon check in IsParagon (It aborts immediately before doing any Convert)
-vS1.03 - 11/03/2016
+S1.03 - 11/03/2016
 Added in-file information
-vS1.02 - 10/25/2016
+S1.02 - 10/25/2016
 Small formatting changes
-vS1.01 - 10/23/2016
+S1.01 - 10/23/2016
 Fixed paragons' breath damage to multiply by base hitscale, then divide by paragonhitscale, because paragonhitscale completely replaces hitscale for paragons
