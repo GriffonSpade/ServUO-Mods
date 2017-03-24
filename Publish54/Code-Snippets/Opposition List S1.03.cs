@@ -213,7 +213,7 @@ Snippet Type: Module Replacement
 
 			if (m_iTeam != c.m_iTeam)
 			{
-				return false
+				return false;
 			}
 /*
 			if (c.Combatant == this)
