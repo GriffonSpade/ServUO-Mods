@@ -1,4 +1,4 @@
-Stat Scalars & Bonuses version S1.03
+Stat Scalars & Bonuses version S1.05
 Purpose: 
 Correlate and Scale secondary stats (hits, mana, stamina) directly to primary stats (strength, intellect, dexterity)
 Allow additional bonus to secondary stats
