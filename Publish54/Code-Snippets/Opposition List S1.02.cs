@@ -211,15 +211,24 @@ Snippet Type: Module Replacement
 
 			BaseCreature c = (BaseCreature)m;
 
-			return (m_iTeam == c.m_iTeam && ((m_bSummoned || m_bControlled) == (c.m_bSummoned || c.m_bControlled))
-				   /* && c.Combatant != this */);
+			if (m_iTeam != c.m_iTeam)
+			{
+				return false
+			}
+/*
+			if (c.Combatant == this)
+			{
+				return false;
+			}
+*/	
+			return ((m_bSummoned || m_bControlled) == (c.m_bSummoned || c.m_bControlled));
 		}
 
 //GS//
 
 Snippet Type: Module Replacement
 //GS
-		public virtual bool IsEnemy( Mobile m )
+		public virtual bool IsEnemy(Mobile m)
 		{
 			XmlIsEnemy a = (XmlIsEnemy)XmlAttach.FindAttachment(this, typeof(XmlIsEnemy));
 
@@ -245,6 +254,7 @@ Snippet Type: Module Replacement
 				return false;
 			}
 
+			// Faction Allied Players/Pets are not my enemies
 			if (GetFactionAllegiance(m) == Allegiance.Ally)
 			{
 				return false;
@@ -253,6 +263,7 @@ Snippet Type: Module Replacement
 			Ethic ourEthic = EthicAllegiance;
 			Player pl = Ethics.Player.Find(m, true);
 
+			// Ethic Allied Players/Pets are not my enemies
 			if (pl != null && pl.IsShielded && (ourEthic == null || ourEthic == pl.Ethic))
 			{
 				return false;
@@ -263,14 +274,14 @@ Snippet Type: Module Replacement
 				return false;
 			}
 
-			if (!(m is BaseCreature) || m is MilitiaFighter)
-			{
-				return true;
-			}
-
 			if (TransformationSpellHelper.UnderTransformation(m, typeof(EtherealVoyageSpell)))
 			{
 				return false;
+			}
+
+			if (!(m is BaseCreature) || m is MilitiaFighter)
+			{
+				return true;
 			}
 
 			BaseCreature c = (BaseCreature)m;
@@ -278,16 +289,36 @@ Snippet Type: Module Replacement
 
 			// Summons should have same rules as their master
 			if (c.Summoned && c.SummonMaster != null && c.SummonMaster is BaseCreature)
+			{
 				c = c.SummonMaster as BaseCreature;
+			}
 
 			if (t.Summoned && t.SummonMaster != null && t.SummonMaster is BaseCreature)
+			{
 				t = t.SummonMaster as BaseCreature;
+			}
 
-			return (t.m_iTeam != c.m_iTeam || ((t.m_bSummoned || t.m_bControlled) != (c.m_bSummoned || c.m_bControlled))/* || c.Combatant == this*/ );
+			// Creatures on other teams are my enemies
+			if (t.m_iTeam != c.m_iTeam)
+			{
+				return true;
+			}
+/*
+			// Creatures attacking me are my enemies
+			if (c.Combatant == this)
+			{
+				return true;
+			}
+*/
+			// If I'm summoned/controlled and they aren't summoned/controlled, they are my enemy
+			// If I'm not summoned/controlled and they are summoned/controlled, they are my enemy
+			return ((t.m_bSummoned || t.m_bControlled) != (c.m_bSummoned || c.m_bControlled));
 		}
 //GS//
 
 Patchnotes:
+vS1.03 - 03/24/2017
+Updated IsFriend and IsEnemy modules
 vS1.02 - 11/03/2016
 Added In-File notes
 vS1.01 - 10/26/2016
